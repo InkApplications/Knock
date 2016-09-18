@@ -1,0 +1,18 @@
+{
+    "name": "inkapplications/knock",
+    "description": "Symfony security authentication through email.",
+    "type": "library",
+    "require": {
+        "symfony/security": "^3.1",
+        "symfony/http-foundation": "^3.1",
+        "symfony/routing": "^3.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maxwell Vandervelde",
+            "email": "Max@MaxVandervelde.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
