@@ -35,5 +35,13 @@ interface UserRepository
      * @throws CredentialsNotFoundException If no user matching the given email
      *         Could be found.
      */
-    public function findCredentialsByEmail($email) : TemporaryPasswordUser;
+    public function findCredentialsByEmail($email): TemporaryPasswordUser;
+
+    /**
+     * Create a new local user object to be persisted.
+     *
+     * @param string $email The user's email address to base the user object on.
+     * @return TemporaryPasswordUser A newly created user-model to be persisted.
+     */
+    public function createUser($email): TemporaryPasswordUser;
 }

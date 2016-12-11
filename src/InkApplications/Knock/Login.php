@@ -7,6 +7,7 @@
 namespace InkApplications\Knock;
 
 use DateTime;
+use InkApplications\Knock\User\CredentialsNotFoundException;
 use InkApplications\Knock\User\TemporaryPasswordUser;
 use InkApplications\Knock\User\UserRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -47,10 +48,22 @@ class Login
      * to be sent with those login credentials.
      *
      * @param string $email The unique user email to begin the process for.
+     * @param boolean $create Whether this method should create the user if the
+     *        User is not currently found int the repository.
+     * @throws CredentialsNotFoundException If the user cannot be found and
+               create is set to `false`
      */
-    public function start($email)
+    public function start($email, $create = false)
     {
-        $user = $this->userRepository->findCredentialsByEmail($email);
+        try {
+            $user = $this->userRepository->findCredentialsByEmail($email);
+        } catch (CredentialsNotFoundException $credentialsError) {
+            if (false === $create) {
+                throw $credentialsError;
+            }
+
+            $user = $this->userRepository->createUser($email);
+        }
 
         if ($this->passwordRecentlyCreated($user)) {
             return;
