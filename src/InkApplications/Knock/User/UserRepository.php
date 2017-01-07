@@ -6,6 +6,8 @@
 
 namespace InkApplications\Knock\User;
 
+use DateTime;
+
 /**
  * Service that is capable of finding and saving user credentials.
  *
@@ -17,16 +19,6 @@ namespace InkApplications\Knock\User;
  */
 interface UserRepository
 {
-    /**
-     * Save the user and/or its password credentials.
-     *
-     * This method is invoked after the user's password has been modified and
-     * needs to be persisted to the application's data storage.
-     *
-     * @param TemporaryPasswordUser $user The user/credentials that need to be saved.
-     */
-    public function saveUserCredentials(TemporaryPasswordUser $user);
-
     /**
      * Find user credentials by an email address.
      *
@@ -41,7 +33,25 @@ interface UserRepository
      * Create a new local user object to be persisted.
      *
      * @param string $email The user's email address to base the user object on.
+     *        if the user is being created for the first time.
      * @return TemporaryPasswordUser A newly created user-model to be persisted.
      */
     public function createUser($email): TemporaryPasswordUser;
+
+    /**
+     * Modify an existing user with new password credentials.
+     *
+     * @param TemporaryPasswordUser $user The original user object to be modified.
+     * @param string $password The user's hashed temporary password.
+     * @param string $salt Password Salt used when hashing the temporary password.
+     * @param DateTime $passwordCreated Timestamp of when the temporary password was generated.
+     */
+    public function updateUserCredentials(TemporaryPasswordUser $user, $password, $salt, DateTime $passwordCreated);
+
+    /**
+     * Remove/Invalidate an existing user's password credentials.
+     *
+     * @param TemporaryPasswordUser $user The user object to be modified.
+     */
+    public function destroyUserCredentials(TemporaryPasswordUser $user);
 }

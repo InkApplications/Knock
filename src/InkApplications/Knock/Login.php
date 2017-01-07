@@ -72,11 +72,9 @@ class Login
         $code = base64_encode(random_bytes(32));
         $salt = base64_encode(random_bytes(16));
         $emailSalt = substr(sha1(random_bytes(16)), 0, 8);
+        $password = $this->encoder->encodePassword($user, $code);
 
-        $user->setSalt($salt);
-        $user->setPassword($this->encoder->encodePassword($user, $code));
-        $user->setPasswordCreated(new DateTime());
-        $this->userRepository->saveUserCredentials($user);
+        $this->userRepository->updateUserCredentials($user, $password, $salt, new DateTime());
 
         $this->messageSender->send($email, $code, $emailSalt);
     }

@@ -167,8 +167,7 @@ class LinkAuthenticator implements GuardAuthenticatorInterface
             throw new AuthenticationException('Token is older than an hour');
         }
 
-        $user->eraseCredentials();
-        $this->userRepository->saveUserCredentials($localUser);
+        $this->userRepository->destroyUserCredentials($localUser);
 
         return true;
     }

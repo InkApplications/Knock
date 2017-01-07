@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2016 Ink Applications, LLC.
+ * Copyright (c) 2016-2017 Ink Applications, LLC.
  * Distributed under the MIT License (http://opensource.org/licenses/MIT)
  */
 
@@ -25,26 +25,12 @@ interface TemporaryPasswordUser extends UserInterface
      *
      * @return DateTime|null The timestamp that the user's password was generated.
      */
-    public function getPasswordCreated();
+    public function getPasswordCreated(): DateTime;
 
     /**
-     * Change the user's password salt.
+     * Get the user's email address.
      *
-     * @param string $salt The plaintext password salt associated with the password.
+     * @return string
      */
-    public function setSalt($salt);
-
-    /**
-     * Change the user's password.
-     *
-     * @param string $password An encrypted/hashed password.
-     */
-    public function setPassword($password);
-
-    /**
-     * Change when the user's password was last changed.
-     *
-     * @param DateTime $created The timestamp of when the user's password was changed.
-     */
-    public function setPasswordCreated(DateTime $created);
+    public function getEmail();
 }
