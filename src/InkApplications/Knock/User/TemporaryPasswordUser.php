@@ -25,7 +25,7 @@ interface TemporaryPasswordUser extends UserInterface
      *
      * @return DateTime|null The timestamp that the user's password was generated.
      */
-    public function getPasswordCreated(): DateTime;
+    public function getPasswordCreated(): ?DateTime;
 
     /**
      * Get the user's email address.
